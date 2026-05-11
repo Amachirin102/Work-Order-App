@@ -1,0 +1,110 @@
+<div class="list-container">
+  <div class="header">
+    <h1>Work Orders</h1>
+    <a mat-raised-button color="primary" routerLink="/workorders/new">
+      <mat-icon>add</mat-icon> New Work Order
+    </a>
+  </div>
+
+  <div *ngIf="hasActiveFilter" class="active-filter">
+    <mat-icon>filter_list</mat-icon>
+    <span>Filtered by &mdash; {{ filterLabel }}</span>
+    <button mat-button color="primary" (click)="clearFilters()">
+      <mat-icon>close</mat-icon> Clear filter
+    </button>
+  </div>
+
+  <mat-card *ngIf="!loading && errorMessage" class="error-card">
+    <mat-card-content>
+      <div class="error-content">
+        <mat-icon color="warn">error_outline</mat-icon>
+        <div class="error-text">
+          <strong>Couldn't load work orders</strong>
+          <p>{{ errorMessage }}</p>
+        </div>
+        <button mat-raised-button color="primary" (click)="load()">
+          <mat-icon>refresh</mat-icon> Retry
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="!errorMessage">
+    <mat-card-content>
+      <div *ngIf="loading" class="loading">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <table mat-table [dataSource]="workOrders" *ngIf="!loading && workOrders.length > 0" class="full-width">
+
+        <ng-container matColumnDef="workOrderNumber">
+          <th mat-header-cell *matHeaderCellDef>WO #</th>
+          <td mat-cell *matCellDef="let wo">{{ wo.workOrderNumber }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Title</th>
+          <td mat-cell *matCellDef="let wo">{{ wo.title }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="customerName">
+          <th mat-header-cell *matHeaderCellDef>Customer</th>
+          <td mat-cell *matCellDef="let wo">{{ wo.customerName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="technicianName">
+          <th mat-header-cell *matHeaderCellDef>Technician</th>
+          <td mat-cell *matCellDef="let wo">{{ wo.technicianName || 'Unassigned' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef>Priority</th>
+          <td mat-cell *matCellDef="let wo">
+            <mat-chip [style.background-color]="wo.priority === 'High' ? '#f44336' : wo.priority === 'Medium' ? '#ff9800' : '#4caf50'"
+                      style="color:white">
+              {{ wo.priority }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let wo">
+            <span class="status-badge" [style.background-color]="getStatusColor(wo.status)">
+              {{ wo.status }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let wo">
+            <button mat-icon-button color="primary" (click)="edit(wo.id)" matTooltip="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(wo.id)" matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <div *ngIf="!loading && workOrders.length === 0" class="empty">
+        <mat-icon>inbox</mat-icon>
+        <ng-container *ngIf="hasActiveFilter; else noneAtAll">
+          <p>No work orders match this filter.</p>
+          <button mat-raised-button color="primary" (click)="clearFilters()">
+            <mat-icon>close</mat-icon> Clear filter
+          </button>
+        </ng-container>
+        <ng-template #noneAtAll>
+          <p>No work orders yet!</p>
+          <a mat-raised-button color="primary" routerLink="/workorders/new">Create First Work Order</a>
+        </ng-template>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

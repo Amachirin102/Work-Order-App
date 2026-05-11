@@ -1,0 +1,64 @@
+<div class="form-container">
+  <h1>{{ isEdit ? 'Edit' : 'New' }} Work Order</h1>
+
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" placeholder="e.g. Fix HVAC System">
+          <mat-error>Title is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" rows="3" placeholder="Describe the issue..."></textarea>
+        </mat-form-field>
+
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Customer Name</mat-label>
+            <input matInput formControlName="customerName" placeholder="e.g. Acme Building">
+            <mat-error>Customer is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Technician Name</mat-label>
+            <input matInput formControlName="technicianName" placeholder="e.g. John Smith">
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Priority</mat-label>
+            <mat-select formControlName="priority">
+              <mat-option *ngFor="let p of priorities" [value]="p">{{ p }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let s of statuses" [value]="s">{{ s }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Estimated Cost ($)</mat-label>
+          <input matInput type="number" formControlName="estimatedCost" placeholder="0.00">
+        </mat-form-field>
+
+        <div class="actions">
+          <button mat-button type="button" (click)="cancel()" [disabled]="saving">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || saving">
+            <mat-icon *ngIf="saving">hourglass_empty</mat-icon>
+            {{ saving ? 'Saving...' : (isEdit ? 'Update' : 'Create') + ' Work Order' }}
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

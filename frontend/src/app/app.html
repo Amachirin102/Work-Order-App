@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+  <mat-icon>build</mat-icon>
+  <span style="margin-left: 8px; font-size: 1.2rem; font-weight: 500;">Facility Work Orders</span>
+  <span style="flex: 1"></span>
+  <a mat-button routerLink="/dashboard">
+    <mat-icon>dashboard</mat-icon> Dashboard
+  </a>
+  <a mat-button routerLink="/workorders">
+    <mat-icon>list</mat-icon> Work Orders
+  </a>
+  <a mat-raised-button color="accent" routerLink="/workorders/new">
+    <mat-icon>add</mat-icon> New
+  </a>
+</mat-toolbar>
+
+<div style="padding: 24px; max-width: 1400px; margin: 0 auto;">
+  <router-outlet></router-outlet>
+</div>

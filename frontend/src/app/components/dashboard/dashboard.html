@@ -1,0 +1,124 @@
+<div class="dashboard">
+  <h1>🔧 Work Order Dashboard</h1>
+  <p class="subtitle">Facility Maintenance Management System</p>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <mat-card *ngIf="!loading && errorMessage" class="error-card">
+    <mat-card-content>
+      <div class="error-content">
+        <mat-icon color="warn">error_outline</mat-icon>
+        <div class="error-text">
+          <strong>Couldn't load dashboard</strong>
+          <p>{{ errorMessage }}</p>
+        </div>
+        <button mat-raised-button color="primary" (click)="load()">
+          <mat-icon>refresh</mat-icon> Retry
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div *ngIf="!loading && !errorMessage" class="stats-grid">
+    <mat-card
+      class="stat-card total"
+      role="button"
+      tabindex="0"
+      matTooltip="View all work orders"
+      (click)="goToWorkOrders()"
+      (keydown.enter)="goToWorkOrders()"
+      (keydown.space)="goToWorkOrders(); $event.preventDefault()"
+    >
+      <mat-card-content>
+        <div class="stat-icon"><mat-icon>assignment</mat-icon></div>
+        <div class="stat-info">
+          <div class="stat-number">{{ stats.total }}</div>
+          <div class="stat-label">Total Work Orders</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card
+      class="stat-card new"
+      role="button"
+      tabindex="0"
+      matTooltip="View new work orders"
+      (click)="goToWorkOrders({ status: 'New' })"
+      (keydown.enter)="goToWorkOrders({ status: 'New' })"
+      (keydown.space)="goToWorkOrders({ status: 'New' }); $event.preventDefault()"
+    >
+      <mat-card-content>
+        <div class="stat-icon"><mat-icon>fiber_new</mat-icon></div>
+        <div class="stat-info">
+          <div class="stat-number">{{ stats.new }}</div>
+          <div class="stat-label">New</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card
+      class="stat-card progress"
+      role="button"
+      tabindex="0"
+      matTooltip="View in-progress work orders"
+      (click)="goToWorkOrders({ status: 'In Progress' })"
+      (keydown.enter)="goToWorkOrders({ status: 'In Progress' })"
+      (keydown.space)="goToWorkOrders({ status: 'In Progress' }); $event.preventDefault()"
+    >
+      <mat-card-content>
+        <div class="stat-icon"><mat-icon>pending</mat-icon></div>
+        <div class="stat-info">
+          <div class="stat-number">{{ stats.inProgress }}</div>
+          <div class="stat-label">In Progress</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card
+      class="stat-card completed"
+      role="button"
+      tabindex="0"
+      matTooltip="View completed work orders"
+      (click)="goToWorkOrders({ status: 'Completed' })"
+      (keydown.enter)="goToWorkOrders({ status: 'Completed' })"
+      (keydown.space)="goToWorkOrders({ status: 'Completed' }); $event.preventDefault()"
+    >
+      <mat-card-content>
+        <div class="stat-icon"><mat-icon>check_circle</mat-icon></div>
+        <div class="stat-info">
+          <div class="stat-number">{{ stats.completed }}</div>
+          <div class="stat-label">Completed</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card
+      class="stat-card high-priority"
+      role="button"
+      tabindex="0"
+      matTooltip="View high-priority work orders"
+      (click)="goToWorkOrders({ priority: 'High' })"
+      (keydown.enter)="goToWorkOrders({ priority: 'High' })"
+      (keydown.space)="goToWorkOrders({ priority: 'High' }); $event.preventDefault()"
+    >
+      <mat-card-content>
+        <div class="stat-icon"><mat-icon>priority_high</mat-icon></div>
+        <div class="stat-info">
+          <div class="stat-number">{{ stats.highPriority }}</div>
+          <div class="stat-label">High Priority</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage" class="quick-actions">
+    <a mat-raised-button color="primary" routerLink="/workorders">
+      <mat-icon>list</mat-icon> View All Work Orders
+    </a>
+    <a mat-raised-button color="accent" routerLink="/workorders/new">
+      <mat-icon>add</mat-icon> Create New Work Order
+    </a>
+  </div>
+</div>

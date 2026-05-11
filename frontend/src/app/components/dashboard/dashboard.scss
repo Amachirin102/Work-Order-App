@@ -1,0 +1,145 @@
+.dashboard {
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 4px;
+    color: #1f4e79;
+  }
+
+  .subtitle {
+    color: #666;
+    margin-bottom: 32px;
+    font-size: 1.1rem;
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    padding: 60px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--mat-sys-primary, #1f4e79);
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+
+    mat-card-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px !important;
+    }
+
+    .stat-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+
+      mat-icon {
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    .stat-info {
+      flex: 1;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1;
+      color: #1f4e79;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    &.total .stat-icon { background-color: #1f4e79; }
+    &.new .stat-icon { background-color: #2196f3; }
+    &.progress .stat-icon { background-color: #ff9800; }
+    &.completed .stat-icon { background-color: #4caf50; }
+    &.high-priority .stat-icon { background-color: #f44336; }
+  }
+
+  .error-card {
+    border-left: 4px solid #f44336;
+    margin-bottom: 24px;
+
+    .error-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+
+      mat-icon {
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+      }
+
+      .error-text {
+        flex: 1;
+        min-width: 200px;
+
+        strong {
+          display: block;
+          font-size: 1.1rem;
+          margin-bottom: 4px;
+          color: #1f4e79;
+        }
+
+        p {
+          margin: 0;
+          color: #666;
+          font-size: 0.9rem;
+        }
+      }
+
+      button {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+  }
+
+  .quick-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+}
